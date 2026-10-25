@@ -39,7 +39,24 @@ the target machine is severely memory-constrained. the **8GB RAM** drove every a
 <br/>
 
 ## strategy
-### disable daemon at boot
+
+#### models in use
+
+- qwen3-4b-agent:latest                                 
+- llama3.2-agent:latest                            
+- qwen3-1.7b-agent:latest                       
+- qwen3:1.7b                                    
+- qwen3:4b-instruct                                   
+- qwen2.5-coder-agent:latest               
+- qwen2.5-coder-lite:latest                            
+- huihui_ai/llama3.2-abliterate:3b                      
+- richardyoung/qwen2.5-3b-instruct-abliterated:latest   
+- llama3.2:3b                                          
+- qwen2.5-coder:3b      
+
+<br/>
+
+#### disable daemon at boot
 to stop the AI engine form idling in the background and starving the fedora desktop of memory, the ollama systemd service was disabled
 
 ```bash
@@ -47,5 +64,13 @@ sudo systemctl stop ollama
 sudo systemctl disable ollama
 ```
 
+<br/>
 
+#### immediate RAM reclamation
+by default, ollama holds models in memory for 5 minutes after a prompt. to force immediate eviction from RAM upon task completion, the systemd service was overidden.
+```bash
+# Added to /etc/systemd/system/ollama.service.d/override.conf
+[Service]
+Environment="OLLAMA_KEEP_ALIVE=0"
+```
 
