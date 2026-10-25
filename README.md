@@ -74,3 +74,19 @@ by default, ollama holds models in memory for 5 minutes after a prompt. to force
 Environment="OLLAMA_KEEP_ALIVE=0"
 ```
 
+<br/>
+
+#### initial context window capping
+standard `qwen 2.5` model defaults to a **32,0000 token context window**, which consumes excessive RAM dynamically. AN initial attempt was made to hard-cap this memory to **8,192 tokens** by compiling a custom `Modelfile`.
+
+```bash
+FROM qwen2.5-coder:3b
+PARAMETER num_ctx 8192
+```
+> the resulting local model was tagged as `qwen2.5-coder-lite`
+
+
+
+
+
+
