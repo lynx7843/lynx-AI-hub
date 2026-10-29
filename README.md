@@ -16,7 +16,7 @@ environment setup guide for running local and paid AI models using `ollama`, `op
 - [opencode](#opencode)
 
 #### part 4 - performance improvements
-- [os configuration](#os-conguration)
+- [hardware acceleration setup](#hardware-acceleration-setup)
 - [opencode skills](#opencode-skills)
 
 #### part 5 - conclusion
@@ -84,6 +84,17 @@ FROM qwen2.5-coder:3b
 PARAMETER num_ctx 8192
 ```
 > the resulting local model was tagged as `qwen2.5-coder-lite`
+
+<br/>
+
+## hardware acceleration setup
+to offload matrix mathematics from the cpu, fedora's native mesa **vulkan drivers** were installed to hook into the intel core ultra's `meteor lake` architecture.
+```bash
+sudo dnf install mesa-vulkan-drivers vulkan-tools intel-opencl intel-level-zero
+```
+> success can be verified by using vulkaninfo utility
+
+<br/>
 
 
 
