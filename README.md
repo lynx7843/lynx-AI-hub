@@ -56,6 +56,11 @@ the target machine is severely memory-constrained. the **8GB RAM** drove every a
 
 <br/>
 
+
+<br/>
+
+## ollama
+
 #### disable daemon at boot
 to stop the AI engine form idling in the background and starving the fedora desktop of memory, the ollama systemd service was disabled
 
