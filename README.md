@@ -39,6 +39,11 @@ the target machine is severely memory-constrained. the **8GB RAM** drove every a
 <br/>
 
 ## strategy
+due to the 8GB RAM limitation large models like 7b-8b and heavy electron/ docker-based harnesses were excluded. the chosen stack prioritized light-weight native binaries and sub 4b models.
+- backend engine: ollama - linux native. chosen for bare-metal execution and vulkan gpu support.
+- agent ahrness: opencode. chosen as a lightweight cli
+
+<br/>
 
 #### models in use
 
@@ -82,7 +87,7 @@ Environment="OLLAMA_KEEP_ALIVE=0"
 <br/>
 
 #### initial context window capping
-standard `qwen 2.5` model defaults to a **32,0000 token context window**, which consumes excessive RAM dynamically. AN initial attempt was made to hard-cap this memory to **8,192 tokens** by compiling a custom `Modelfile`.
+standard `qwen 2.5` model defaults to a **32,0000 token context window**, which consumes excessive RAM dynamically. an initial attempt was made to hard-cap this memory to **8,192 tokens** by compiling a custom `Modelfile`.
 
 ```bash
 FROM qwen2.5-coder:3b
@@ -98,6 +103,13 @@ to offload matrix mathematics from the cpu, fedora's native mesa **vulkan driver
 sudo dnf install mesa-vulkan-drivers vulkan-tools intel-opencl intel-level-zero
 ```
 > success can be verified by using vulkaninfo utility
+
+<br/>
+
+because ollama safely ignores integrated GPUs by default to prevent screen tearing, an explicit override flag was added to the **systemd** service
+```bash
+Environment="OLLAMA_IGPU_ENABLE=true"
+```
 
 <br/>
 
