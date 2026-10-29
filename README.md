@@ -97,6 +97,28 @@ PARAMETER num_ctx 8192
 
 <br/>
 
+## opencode
+the initial configuration for the opencode cli harnessed the ollama backend via an OpenAI compatible translation layer. the configuration file at ~/.config/opencode/opencode.json was updated to achieve this.
+```bash
+{
+  "model": "ollama/qwen2.5-coder-lite",
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "baseURL": "http://127.0.0.1:11434/v1",
+      "models": {
+        "qwen2.5-coder-lite": {
+          "name": "qwen2.5-coder-lite",
+          "tools": true
+        }
+      }
+    }
+  }
+}
+```
+
+<br/>
+
 ## hardware acceleration setup
 to offload matrix mathematics from the cpu, fedora's native mesa **vulkan drivers** were installed to hook into the intel core ultra's `meteor lake` architecture.
 ```bash
