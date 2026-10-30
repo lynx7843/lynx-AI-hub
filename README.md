@@ -150,7 +150,14 @@ diagnosis: vulkan compute drivers failed to process the heavy quantized key-valu
 
 <br/>
 
+- API translation bug: the model continues to print raw JSON tool requests instead of executing them.
 
+diagnosis: `@ai-sdk/openai-comatible` wrapper in the config file corrupted opencode native tool-calling parsers.
 
+<br/>
+
+- unwanted cloud fallback: after stripping the config to force native local connections, opencode entirely bypasses the local models. it automatically fell back to a free cloud model - "big pickle by opencode zen"
+
+diagnosis: if the ollama background service is not running at the exact moment opencode launches, the harness marks the local provider as **unavailable** and defaults to the cloud.
 
 
