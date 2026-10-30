@@ -135,6 +135,20 @@ Environment="OLLAMA_IGPU_ENABLE=true"
 
 <br/>
 
+## issues
+despite hardware optimization functioning correctly the software stack repeatedly failed to execute agentic tasks. `inetl_gpu_top` shows 72% render/ 3D usage. following are the reasons for failer.
+
+- context starvation: the model output raw JSON instead of executing file scans.
+
+diagnosis: opencode requires a massive 64k context windows just to pass its internal tool instructions. the 8k RAM-protective cap truncated these instructions, causing the model to fail.
+
+<br/>
+
+- GPU math callapse (NaN errors): to accommodate the 64k context in 8GB of RAM experimental memory compression flags like `OLLAMA_FLASH_ATTENTION=1` and `OLLAMA_KV_CACHE_TYPE=q8_0` are added. results are total blank output.
+
+diagnosis: vulkan compute drivers failed to process the heavy quantized key-value cache, result is **Not A Number (NaN)** output.
+
+<br/>
 
 
 
